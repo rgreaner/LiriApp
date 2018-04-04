@@ -9,21 +9,8 @@ var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
 //----------------------------------------------------Spotify--------------------------------
-function spotifyThis() {
-  var userInput = process.argv;
-  var song = "";
-  for (var i = 3; i < userInput.length; i++) {
-    if (i > 3 && i < userInput.length) {
-      song = song + " " + userInput[i];
-    }
-    else {
-      song += userInput[i];
-    }
-  }
-  if (song == "") {
-    song = "The Sign Ace of Base";
-    console.log(song)
-  }
+function spotifyThis(song) {
+  
   spotify.search({ type: 'track', query: song }, function (err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
@@ -91,7 +78,23 @@ function omdbIt() {
   });
 }
 if (process.argv[2] == 'spotify-this-song') {
-  spotifyThis();
+  var userInput = process.argv;
+  var song = "";
+  for (var i = 3; i < userInput.length; i++) {
+    if (i > 3 && i < userInput.length) {
+      song = song + " " + userInput[i];
+    }
+    else {
+      song += userInput[i];
+    }
+    
+  }
+  if (song == "") {
+    song = "The Sign Ace of Base";
+    console.log(song)
+  }
+  console.log(song)
+  spotifyThis(song);
 }
 if (process.argv[2] == 'my-tweets') {
   tweetThis();
@@ -101,7 +104,7 @@ if (process.argv[2] == 'movie-this') {
 }
 //---------------------------------------------------------Do what it says piece-------------------------
 
-if (process.argv[2] == 'do-what-it-says') { 
+if (process.argv[2] == 'do-what-it-says') {
   fs.readFile('random.txt', 'utf8', function (err, data) {
     if (err) {
       return console.log(err);
@@ -109,7 +112,7 @@ if (process.argv[2] == 'do-what-it-says') {
     var array = data.split(',');
     console.log(array);
     if (array[0] == 'spotify-this-song') {
-      spotifyThis(array[2]);
+      spotifyThis(array[1]);
     }
     if (array[0] == 'my-tweets') {
       tweetThis(array[1]);
